@@ -20,6 +20,13 @@ export class MoviesService {
   }
   constructor(private http: HttpClient) { }
 
+
+  // Este metodo lo que hace es que traemos las peliculas más populares desde de la api
+  getPopulares() {
+    const query = '/discover/movie?sort_by=popularity.desc';
+    return this.ejecutarQuery<RespuestaMDB>(query);
+  }
+  
   getFeature() {
     const  hoy  = new Date();
     const ultimoDia = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0).getDate();

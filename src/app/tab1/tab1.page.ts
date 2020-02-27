@@ -10,19 +10,24 @@ import { RespuestaMDB, Pelicula } from '../interfaces/interfaces';
 export class Tab1Page implements OnInit {
 
   peliculas: Pelicula[] = [];
+  populares: Pelicula[] = [];
 
   slideOpts = {
     slidesPerView: 1.1,
     freeMode: true
   }
-  constructor(private MoviesService: MoviesService) {}
+  constructor(private moviesService: MoviesService) {}
 
 
 ngOnInit() {
-   this.MoviesService.getFeature().subscribe( resp  => {
+   this.moviesService.getFeature().subscribe( resp  => {
    console.log(resp);
    this.peliculas = resp.results;
  });
+   this.moviesService.getPopulares().subscribe( resp => {
+    console.log('Populares', resp);
+    this.populares = resp.results;
+   });
 }
 
 }
