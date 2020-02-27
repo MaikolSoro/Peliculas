@@ -63,9 +63,15 @@ export class MoviesService {
     return this.ejecutarQuery<PeliculaDetalle>(`/movie/${id}?a=1`);
 
   }
+  // muestro los actores de la pelicula
   getActoresPelicula(id: string) {
 
     return this.ejecutarQuery<RespuestaCredits>(`/movie/${id}/credits?a=1`);
 
+  }
+
+  // metodo para mostrar los resultados de la busqueda desde la api
+  buscarPeliculas(texto: string) {
+    return this.ejecutarQuery(`/search/movie?query=${ texto }`);
   }
 }
