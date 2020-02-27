@@ -11,6 +11,10 @@ const apiKey = environment.apikey;
 })
 export class MoviesService {
 
+  private popularesPage = 0;
+
+  constructor(private http: HttpClient) { }
+
  // ejecutar las consultas de la api 
   private ejecutarQuery<T>( query: string) {
     query = URL + query;
@@ -18,12 +22,16 @@ export class MoviesService {
     return this.http.get<T>(query);
 
   }
-  constructor(private http: HttpClient) { }
+ 
 
 
   // Este metodo lo que hace es que traemos las peliculas más populares desde de la api
   getPopulares() {
-    const query = '/discover/movie?sort_by=popularity.desc';
+
+    this.popularesPage++;
+
+    const query = `/discover/movie?sort_by=popularity.desc&page=${this.popularesPage}`;
+
     return this.ejecutarQuery<RespuestaMDB>(query);
   }
   
