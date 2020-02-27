@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
+  textoBuscar = '';
+  ideas : string[] = ['Spiderman', 'Sonik','El señor de los anillos','Superman'];
   constructor() {}
 
+  buscar(event) {
+  const valor = event.detail.value;
+  }
 }
