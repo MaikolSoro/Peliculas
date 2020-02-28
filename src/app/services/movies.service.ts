@@ -1,7 +1,8 @@
 import { Injectable, Query } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RespuestaMDB, PeliculaDetalle, RespuestaCredits } from '../interfaces/interfaces';
+import { RespuestaMDB, PeliculaDetalle, RespuestaCredits, Genre } from '../interfaces/interfaces';
 import { environment } from '../../environments/environment';
+import { resolve } from 'url';
 
 const URL = environment.url;
 const apiKey = environment.apikey;
@@ -12,7 +13,7 @@ const apiKey = environment.apikey;
 export class MoviesService {
 
   private popularesPage = 0;
-
+  generos: Genre[] = [];
   constructor(private http: HttpClient) { }
 
  // ejecutar las consultas de la api 
@@ -73,5 +74,18 @@ export class MoviesService {
   // metodo para mostrar los resultados de la busqueda desde la api
   buscarPeliculas(texto: string) {
     return this.ejecutarQuery(`/search/movie?query=${ texto }`);
+  }
+
+  cargarGeneros(): Promise<Genre[]> {
+
+    return new Promise(resolve => {
+
+      this.ejecutarQuery(`/genre/movie/list?a=1`)
+      .subscribe(resp => {
+        this.generos = resp['genres'];
+        resolve(this.generos);
+      });
+
+    });
   }
 }
